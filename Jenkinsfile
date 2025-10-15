@@ -3,18 +3,32 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'whoami'
-                sh '~/.nvm/versions/node/v22.20.0/bin/npm install' 
+                sh '''
+                    export NVM_DIR="$HOME/.nvm"
+                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                    nvm use 22.20.0 
+                    npm install
+                    '''
             }
         }
         stage('Test') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                sh '''
+                    export NVM_DIR="$HOME/.nvm"
+                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                    nvm use 22.20.0 
+                    ./jenkins/scripts/test.sh
+                '''
             }
         }
         stage('Deliver') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                sh '''
+                    export NVM_DIR="$HOME/.nvm"
+                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+                    nvm use 22.20.0 
+                    ./jenkins/scripts/deliver.sh
+                '''
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
             }
