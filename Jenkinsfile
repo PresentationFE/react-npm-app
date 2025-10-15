@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh '/root/.nvm/versions/node/v22.15.0/bin/npm install' 
+                sh 'whoami'
+                sh 'npm install' 
             }
         }
         stage('Test') {
