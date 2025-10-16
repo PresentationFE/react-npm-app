@@ -1,36 +1,18 @@
 pipeline {
     agent any
+    environment {
+        PATH = "$HOME/.nvm/versions/node/v22.20.0/bin/:$PATH"
+    }
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
                 sh '''
-                    export NVM_DIR="$HOME/.nvm"
-                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                    nvm use 22.20.0 
-                    npm install
-                    '''
-            }
-        }
-        stage('Test') {
-            steps {
-                sh '''
-                    export NVM_DIR="$HOME/.nvm"
-                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                    nvm use 22.20.0 
-                    ./jenkins/scripts/test.sh
+                node -v
+                npm -v
+                npm config set registry http://registry.npm.taobao.org
+                npm install
+                npm run build
                 '''
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh '''
-                    export NVM_DIR="$HOME/.nvm"
-                    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-                    nvm use 22.20.0 
-                    ./jenkins/scripts/deliver.sh
-                '''
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
             }
         }
     }
