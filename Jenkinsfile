@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        PATH = "$HOME/.nvm/versions/node/v22.20.0/bin/:$PATH"
-    }
     stages {
         stage('Build') {
             steps {
