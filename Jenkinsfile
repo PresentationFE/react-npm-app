@@ -2,7 +2,8 @@
 pipeline {
     agent any
     environment {
-        PATH = "/var/lib/jenkins/.nvm/versions/node/v22.20.0/bin/:$PATH"
+        // PATH = "/var/lib/jenkins/.nvm/versions/node/v22.20.0/bin/:$PATH"
+        PATH = "/var/lib/jenkins/.nvm/versions/node/v16.20.2/bin:${env.PATH}"
     }
 
     stages {
