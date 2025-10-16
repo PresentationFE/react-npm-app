@@ -19,8 +19,8 @@ npm run build
         }
         stage('Test') {
             steps {
-                env.NODE_ENV = 'test'
-                print "Environment will be : ${env.NODE_ENV}"
+                // env.NODE_ENV = 'test'
+                // print "Environment will be : ${env.NODE_ENV}"
                 sh 'node -v'
                 sh 'npm prune'
                 sh 'npm install'
